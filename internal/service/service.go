@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const db_name string = "retail_pulse"
@@ -55,4 +56,31 @@ func (svs *StoresVisitService) FindStoresVisitByID(id primitive.ObjectID) (*mode
 	}
 
 	return &storesVisit, nil
+}
+
+// GetStatusAndErrorByID fetches the status and error message for a StoresVisit by its ID
+func (svs *StoresVisitService) GetStatusAndErrorByID(id primitive.ObjectID) (string, string, string, error) {
+	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	// Create a variable to hold the result
+	result := struct {
+		Status        string `bson:"status"`
+		Error         string `bson:"error"`
+		FailedStoreID string `bson:"failed_store_id"`
+	}{}
+
+	filter := bson.M{"_id": id}
+	projection := bson.M{"status": 1, "error": 1, "failed_store_id": 1} // fields to include
+
+	// Find the document by ID with projection
+	err := collection.FindOne(context.TODO(), filter, options.FindOne().SetProjection(projection)).Decode(&result)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return "", "", "", mongo.ErrNoDocuments // No document found
+		}
+		return "", "", "", err // Return the error if something else went wrong
+	}
+
+	// Return the status and error message
+	return result.Status, result.Error, result.FailedStoreID, nil
 }
