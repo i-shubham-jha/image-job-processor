@@ -11,9 +11,10 @@ type VisitInfo struct {
 }
 
 type StoresVisit struct {
-	ID     primitive.ObjectID `bson:"_id,omitempty"`
-	Status string             `bson:"status"`
-	Error  string             `bson:"error"`
-	Count  int                `bson:"count"`
-	Visits []VisitInfo        `bson:"visits"`
+	ID            primitive.ObjectID `bson:"_id,omitempty"`
+	Status        string             `bson:"status"`
+	Error         string             `bson:"error"`
+	FailedStoreID string             `bson:"failed_store_id"`
+	Count         int                `bson:"count"`
+	Visits        []VisitInfo        `bson:"visits"`
 }
