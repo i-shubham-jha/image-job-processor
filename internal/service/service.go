@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"retail_pulse/internal/db"
 	"retail_pulse/internal/model"
 
@@ -83,4 +84,38 @@ func (svs *StoresVisitService) GetStatusAndErrorByID(id primitive.ObjectID) (str
 
 	// Return the status and error message
 	return result.Status, result.Error, result.FailedStoreID, nil
+}
+
+// UpdateStoresVisit updates the status, error message, and failed store ID based on the provided parameters
+func (svs *StoresVisitService) UpdateStoresVisitStatus(id primitive.ObjectID, status, errMssg, failedStoreID string) error {
+	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	update := bson.M{"$set": bson.M{"status": status}} // Initialize update with status
+
+	// Check the status and update accordingly
+	if status == "completed" {
+		// If status is "completed", we only update the status
+		update = bson.M{"$set": bson.M{"status": status}}
+	} else if status == "failed" {
+
+		if errMssg == "" || failedStoreID == "" {
+			return errors.New("error message and failed_store_id missing")
+		} else {
+			// If status is "failed", update status, error message, and failed store ID
+			update = bson.M{
+				"$set": bson.M{
+					"status":          status,
+					"error":           errMssg,
+					"failed_store_id": failedStoreID,
+				},
+			}
+		}
+
+	} else {
+		return mongo.ErrNoDocuments // Return an error if the status is neither "completed" nor "failed"
+	}
+
+	// Perform the update operation
+	_, err := collection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
+	return err
 }
