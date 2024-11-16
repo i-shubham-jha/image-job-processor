@@ -136,6 +136,14 @@ Run the Image as a Container (attaching to `retail_pulse` network) \
 You can check if the MongoDB container is running by executing: \
 `docker ps`
 
+**Note:** If you ever get the following error:
+> docker: Error response from daemon: Conflict. The container name "/mongodb" is already in use by container "< HASH >". You have to remove (or rename) that container to be able to reuse that name.
+
+Then run the following commands to remove the `mongodb` container:
+
+`docker stop mongodb` \
+`docker rm mongodb`
+
 ## Without Docker
 
 **Note:** This project was built and tested with Go version 1.23.1. Please ensure that this version is installed on your machine before proceeding further. Please refer to [Manage Go Installations](https://go.dev/doc/manage-install)
@@ -175,7 +183,7 @@ Use the following command to build the docker image with the tag `retail_pulse`
 
 Run the container with the following command, replacing `<YOUR_URI>` with the appropriate URI:
 
-`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI=<YOUR_URI> retail_pulse`
+`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI=<YOUR_URI> -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs retail_pulse`
 
 If you followed the MongoDB Docker setup above, then use:
 
