@@ -2,6 +2,8 @@ module retail_pulse
 
 go 1.23.1
 
+require golang.org/x/exp v0.0.0-20241108190413-2d47ceb2692f
+
 require (
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.6.0 // indirect
@@ -14,6 +16,6 @@ require (
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	go.mongodb.org/mongo-driver v1.17.1 // indirect
 	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/sync v0.8.0 // indirect
+	golang.org/x/sync v0.9.0 // indirect
 	golang.org/x/text v0.17.0 // indirect
 )
