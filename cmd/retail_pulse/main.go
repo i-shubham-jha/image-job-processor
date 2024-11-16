@@ -38,5 +38,5 @@ func main() {
 	// start server
 	logger.Log(fmt.Sprintf("Starting server on port %v", *port))
 	logger.Log("-------------INIT DONE-------------")
-	http.ListenAndServe(fmt.Sprintf("localhost:%d", *port), r)
+	http.ListenAndServe(fmt.Sprintf("0.0.0.0:%d", *port), r)
 }
