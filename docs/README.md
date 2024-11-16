@@ -5,6 +5,7 @@
 - Given that the number of images to be processed per job may be quite large, the actual job processing occurs asynchronously in the background.
 - Users receive a job ID when a job is successfully created, which they can use to query the job status at any time.
 - Additionally, users need to provide a list of valid Store IDs in the form of a CSV file.
+- For design and package descriptions see `design_and_pkg_descriptons` file in the same directory.
 
 # Endpoints
 
@@ -192,7 +193,6 @@ If logging to `stdout`, then use the following command to run the application an
 
 To stop the application, press `Ctrl+C` and wait for graceful shutdown.
 
-# Testing Instructions
 
 # Development Environment
 
