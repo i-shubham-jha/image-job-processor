@@ -17,14 +17,14 @@ func GetJobInfoHandler(w http.ResponseWriter, r *http.Request) {
 	jobID := query.Get("jobid")
 
 	if jobID == "" {
-		http.Error(w, "jobid is a required field", 400)
+		sendErrBack("jobd is a required field", w)
 		return
 	}
 
 	id, err := primitive.ObjectIDFromHex(jobID)
 
 	if err != nil {
-		http.Error(w, "invalid jobid", 400)
+		sendErrBack("invalid jobid", w)
 		return
 	}
 
@@ -33,7 +33,7 @@ func GetJobInfoHandler(w http.ResponseWriter, r *http.Request) {
 	status, errMssg, failedStoreID, err := svs.GetStatusAndErrorByID(id)
 
 	if err != nil {
-		http.Error(w, "jobid does not exist", http.StatusBadRequest)
+		sendErrBack("jobid does not exist", w)
 	} else {
 		if status == "completed" || status == "ongoing" {
 			res := struct {
