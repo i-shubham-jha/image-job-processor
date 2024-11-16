@@ -16,7 +16,7 @@ var (
 	once     sync.Once
 )
 
-const filePath string = "StoreMasterAssignment.csv"
+var CsvFilePath string = "StoreMasterAssignment.csv"
 
 // NewStoreManager creates a new instance of StoreManager and loads store IDs from a CSV file
 func NewStoreManager() (*StoreManager, error) {
@@ -25,7 +25,7 @@ func NewStoreManager() (*StoreManager, error) {
 		instance = &StoreManager{
 			storeIDs: make(map[string]struct{}),
 		}
-		err = instance.loadStoreIDs(filePath)
+		err = instance.loadStoreIDs(CsvFilePath)
 	})
 
 	return instance, err
