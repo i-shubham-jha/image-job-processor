@@ -173,7 +173,9 @@ Run the container with the following command, replacing `<YOUR_URI>` with the ap
 
 If you followed the MongoDB Docker setup above, then use:
 
-`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" retail_pulse`
+`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" -v $(pwd)/docker_mounts/files:/app/files  retail_pulse`
+
+All the images downloaded by the application will be saved in `./docker_mounts/files/`.
 
 # Testing Instructions
 
