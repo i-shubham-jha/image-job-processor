@@ -231,3 +231,6 @@ To stop the application, press `Ctrl+C` and wait for graceful shutdown.
 - **Containerization:** Docker v27.2.1
 
 # Future Improvement Scope
+- The `ProcessJob` function downloads and processes only those images that have not yet been processed. This feature can be utilized to resume jobs that were still "ongoing" during a previous run if the application crashed. This resumption capability can be implemented at the start of the program.
+- Currently, we have only a single instance of the server running, which could easily become overwhelmed in the event of very high loads. Our system should be able to dynamically scale the number of server instances to better manage the workload.
+- At present, a single mistyped Store ID or image URL causes the entire job to be marked as failed. We should provide the user with more specific feedback and allow them to make corrections. In that case, the system should process only the corrected fields. 
