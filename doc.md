@@ -107,9 +107,9 @@ If a `store_id` does not exist or an image download fails for any given URL.
 
 # Installation Instructions
 
-- This project supports asynchronous logging. The default sink is stdout. You can change the sink to a file named app.log by setting const LogToFile = true in the ./internal/logger/logger.go file at line 24 before running the application.
+- This project supports asynchronous logging. The default sink is stdout. You can change the sink to a file named app.log by setting `const LogToFile = true` in the `./internal/logger/logger.go` file at line 25 before running the application.
 
-- The default CSV file containing Store IDs is StoreMasterAssignment.csv, located in the root directory. You can change the path by using the -f flag when running the application.
+- The default CSV file containing Store IDs is `StoreMasterAssignment.csv`, located in the root directory. You can change the path by using the `-f` flag when running the application.
 
 **Note**: This project relies on MongoDB as the database. The program expects the environment variable MONGODB_URI to be set to point to the URI of the MongoDB database (either the managed Atlas Cluster or a self-hosted server).
 
@@ -173,7 +173,7 @@ Run the container with the following command, replacing `<YOUR_URI>` with the ap
 
 If you followed the MongoDB Docker setup above, then use:
 
-`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" -v $(pwd)/docker_mounts/files:/app/files  retail_pulse`
+`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs  retail_pulse`
 
 All the images downloaded by the application will be saved in `./docker_mounts/files/`.
 
