@@ -3,6 +3,7 @@ package store
 import (
 	"encoding/csv"
 	"os"
+	"retail_pulse/internal/logger"
 	"sync"
 )
 
@@ -54,7 +55,7 @@ func (sm *StoreManager) loadStoreIDs(filePath string) error {
 			}
 		}
 	}
-
+	logger.GetLogger().Log("CSV read finished")
 	return nil
 }
 

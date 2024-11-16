@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"retail_pulse/internal/db"
+	"retail_pulse/internal/logger"
 	"retail_pulse/internal/model"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -38,12 +39,15 @@ func (svs *StoresVisitService) InsertStoresVisit(storesVisit model.StoresVisit) 
 	}
 
 	// Return the inserted ID
+	logger.GetLogger().Log(fmt.Sprintf("Inserted new id %v", result.InsertedID.(primitive.ObjectID).Hex()))
 	return result.InsertedID.(primitive.ObjectID), nil
 }
 
 // FindStoresVisitByID fetches a StoresVisit by its ID from the database
 func (svs *StoresVisitService) FindStoresVisitByID(id primitive.ObjectID) (*model.StoresVisit, error) {
 	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	logger.GetLogger().Log(fmt.Sprintf("Called FindStoresVisitByID: %v", id.Hex()))
 
 	var storesVisit model.StoresVisit
 	filter := bson.M{"_id": id}
@@ -63,6 +67,8 @@ func (svs *StoresVisitService) FindStoresVisitByID(id primitive.ObjectID) (*mode
 // GetStatusAndErrorByID fetches the status and error message for a StoresVisit by its ID
 func (svs *StoresVisitService) GetStatusAndErrorByID(id primitive.ObjectID) (string, string, string, error) {
 	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	logger.GetLogger().Log(fmt.Sprintf("Called GetStatusAndErrorByID: %v", id.Hex()))
 
 	// Create a variable to hold the result
 	result := struct {
@@ -90,6 +96,8 @@ func (svs *StoresVisitService) GetStatusAndErrorByID(id primitive.ObjectID) (str
 // UpdateStoresVisit updates the status, error message, and failed store ID based on the provided parameters
 func (svs *StoresVisitService) UpdateStoresVisitStatus(id primitive.ObjectID, status, errMssg, failedStoreID string) error {
 	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	logger.GetLogger().Log(fmt.Sprintf("Called UpdateStoresVisitStatus: %v", id.Hex()))
 
 	update := bson.M{"$set": bson.M{"status": status}} // Initialize update with status
 
@@ -124,6 +132,8 @@ func (svs *StoresVisitService) UpdateStoresVisitStatus(id primitive.ObjectID, st
 // UpdateVisitInfo updates the perimeters and imageUUIDs of a specific VisitInfo in a StoresVisit document.
 func (svs *StoresVisitService) UpdateVisitInfo(id primitive.ObjectID, visitIndex int, newPerimeters []int64, newImageUUIDs []string) error {
 	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	logger.GetLogger().Log(fmt.Sprintf("Called UpdateVisitInfo: %v", id.Hex()))
 
 	// Create the filter to find the specific StoresVisit document by ID
 	filter := bson.M{"_id": id}

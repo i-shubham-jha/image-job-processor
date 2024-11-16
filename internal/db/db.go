@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"retail_pulse/internal/logger"
 	"sync"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -35,6 +36,8 @@ func GetMongoClient() *mongo.Client {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		logger.GetLogger().Log("Successfully established connection to mongodb")
 	})
 	return clientInstance
 }

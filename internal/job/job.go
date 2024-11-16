@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand/v2"
 	"retail_pulse/internal/files"
+	"retail_pulse/internal/logger"
 	"retail_pulse/internal/model"
 	"retail_pulse/internal/service"
 	"retail_pulse/internal/store"
@@ -15,6 +16,9 @@ import (
 // assumes that storesVisit has been validated by the caller
 // and this id is marked as ongoing in db
 func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
+
+	logger.GetLogger().Log(fmt.Sprintf("Starting new job for id %v", id.Hex()))
+
 	sm, err := store.NewStoreManager()
 
 	if err != nil {
@@ -28,6 +32,7 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 
 		if !sm.StoreIDExists(store.StoreID) {
 			svs.UpdateStoresVisitStatus(id, "failed", "store ID does not exist", store.StoreID)
+			logger.GetLogger().Log(fmt.Sprintf("Failed job for id %v", id.Hex()))
 			return
 		}
 
@@ -49,6 +54,7 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 
 			if err != nil {
 				svs.UpdateStoresVisitStatus(id, "failed", err.Error(), store.StoreID)
+				logger.GetLogger().Log(fmt.Sprintf("Failed job for id %v", id.Hex()))
 				return
 			}
 
@@ -56,6 +62,7 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 
 			if err != nil {
 				fmt.Println(err)
+				logger.GetLogger().Log(fmt.Sprintf("Failed job for id %v", id.Hex()))
 				return
 			}
 
@@ -74,9 +81,11 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 		err = svs.UpdateVisitInfo(id, visitIndex, new_image_perims, new_image_uuids)
 		if err != nil {
 			fmt.Println(err)
+			logger.GetLogger().Log(fmt.Sprintf("Failed job for id %v", id.Hex()))
 			return
 		}
 	}
 
 	svs.UpdateStoresVisitStatus(id, "completed", "", "")
+	logger.GetLogger().Log(fmt.Sprintf("Completed job for id %v", id.Hex()))
 }

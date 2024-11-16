@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"retail_pulse/internal/logger"
 
 	"github.com/google/uuid"
 )
@@ -56,6 +57,8 @@ func DownloadImage(url string) (*ImageHolder, error) {
 	// Generate a new UUID and convert it to a string
 	id := uuid.New().String()
 
+	logger.GetLogger().Log(fmt.Sprintf("Downloaded image from %v", url))
+
 	return &ImageHolder{
 		ID:     id,
 		Image:  img,
@@ -89,8 +92,10 @@ func (ih *ImageHolder) SaveImage(documentID, storeID string) error {
 	// Determine the format based on the Format field
 	switch ih.Format {
 	case "png":
+		logger.GetLogger().Log(fmt.Sprintf("Saving file %v.png", ih.ID))
 		return png.Encode(outFile, ih.Image)
 	case "jpeg":
+		logger.GetLogger().Log(fmt.Sprintf("Saving file %v.jpeg", ih.ID))
 		return jpeg.Encode(outFile, ih.Image, nil)
 	default:
 		return fmt.Errorf("unsupported image format: %s", ih.Format)

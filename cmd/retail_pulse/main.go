@@ -5,12 +5,16 @@ import (
 	"fmt"
 	"net/http"
 	"retail_pulse/api"
+	"retail_pulse/internal/logger"
+	"retail_pulse/internal/service"
 	"retail_pulse/internal/store"
 
 	"github.com/gorilla/mux"
 )
 
 func main() {
+	logger := logger.GetLogger()
+
 	// reading cmd args
 	port := flag.Int("p", 8080, "Port number to start server on")
 	file := flag.String("f", "StoreMasterAssignment.csv", "File name to read")
@@ -20,6 +24,11 @@ func main() {
 
 	// set csv file
 	store.CsvFilePath = *file
+	logger.Log(fmt.Sprintf("Reading csv file %s", *file))
+	store.NewStoreManager()
+
+	// establish connection to mongodb
+	service.NewStoresVisitService()
 
 	// routes and handlers
 	r := mux.NewRouter()
@@ -27,5 +36,7 @@ func main() {
 	r.HandleFunc("/api/submit", api.SubmitJobHandler).Methods("POST")
 
 	// start server
+	logger.Log(fmt.Sprintf("Starting server on port %v", *port))
+	logger.Log("-------------INIT DONE-------------")
 	http.ListenAndServe(fmt.Sprintf("localhost:%d", *port), r)
 }
