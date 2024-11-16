@@ -74,7 +74,7 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 			time.Sleep(time.Duration(ms) * time.Millisecond)
 
 			new_image_perims[i] = perim
-			new_image_uuids[i] = img_holder.ID
+			new_image_uuids[i] = fmt.Sprintf("%s.%s", img_holder.ID, img_holder.Format)
 		}
 
 		// store the new image perims and uuids in db
