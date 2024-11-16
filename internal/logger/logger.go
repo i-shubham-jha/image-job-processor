@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"sync"
 	"time"
 )
@@ -37,7 +38,29 @@ func newLogger() *Logger {
 func (l *Logger) startLogging() {
 
 	if LogToFile {
-		file, err := os.OpenFile("app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		logsDir := "logs"
+
+		// Get the current working directory
+		currentDir, err := os.Getwd()
+		if err != nil {
+			fmt.Println("Error getting current directory:", err)
+			return
+		}
+
+		// Create the full path for the logs directory
+		logsPath := filepath.Join(currentDir, logsDir)
+
+		// Check if the directory exists
+		if _, err := os.Stat(logsPath); os.IsNotExist(err) {
+			// Create the logs directory
+			err := os.Mkdir(logsPath, 0755) // 0755 is the permission mode
+			if err != nil {
+				fmt.Println("Error creating logs directory:", err)
+				return
+			}
+		}
+
+		file, err := os.OpenFile("./logs/app.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 		if err != nil {
 			log.Fatal(err)
 		}
