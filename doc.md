@@ -111,6 +111,8 @@ If a `store_id` does not exist or an image download fails for any given URL.
 
 - The default CSV file containing Store IDs is `StoreMasterAssignment.csv`, located in the root directory. You can change the path by using the `-f` flag when running the application.
 
+**Note:** Skip to "Docker Compose" subsection for a single command install and run.
+
 **Note**: This project relies on MongoDB as the database. The program expects the environment variable MONGODB_URI to be set to point to the URI of the MongoDB database (either the managed Atlas Cluster or a self-hosted server).
 
 ## Setting up MongoDB Docker Container
@@ -176,6 +178,16 @@ If you followed the MongoDB Docker setup above, then use:
 `docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs  retail_pulse`
 
 All the images downloaded by the application will be saved in `./docker_mounts/files/`.
+
+## Docker Compose
+
+Navigate to the project root. It contains a `docker-compose.yml` file which can be used to setup, build and run both MongoDB and retail_pulse containers using only a single command.
+
+If logging to `stdout`, then use the following command to run the application and receive the logs on the terminal:
+
+`docker-compose up`
+
+To stop the application, press `Ctrl+C` and wait for graceful shutdown.
 
 # Testing Instructions
 
