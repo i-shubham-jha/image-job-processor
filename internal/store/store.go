@@ -3,6 +3,7 @@ package store
 import (
 	"encoding/csv"
 	"os"
+	"sync"
 )
 
 // StoreManager manages the store IDs
@@ -10,17 +11,24 @@ type StoreManager struct {
 	storeIDs map[string]struct{}
 }
 
+var (
+	instance *StoreManager
+	once     sync.Once
+)
+
+const filePath string = "StoreMasterAssignment.csv"
+
 // NewStoreManager creates a new instance of StoreManager and loads store IDs from a CSV file
-func NewStoreManager(filePath string) (*StoreManager, error) {
-	sm := &StoreManager{
-		storeIDs: make(map[string]struct{}),
-	}
+func NewStoreManager() (*StoreManager, error) {
+	var err error
+	once.Do(func() {
+		instance = &StoreManager{
+			storeIDs: make(map[string]struct{}),
+		}
+		err = instance.loadStoreIDs(filePath)
+	})
 
-	if err := sm.loadStoreIDs(filePath); err != nil {
-		return nil, err
-	}
-
-	return sm, nil
+	return instance, err
 }
 
 // loadStoreIDs loads store IDs from a CSV file into the map
