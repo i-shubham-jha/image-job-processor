@@ -173,11 +173,7 @@ Run the container with the following command, replacing `<YOUR_URI>` with the ap
 
 If you followed the MongoDB Docker setup above, then use:
 
-`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://<IP_ON_RETAIL_PULSE>:27017" retail_pulse`
-
-`<IP_ON_RETAIL_PULSE>` is the IP address of the `mongodb` container on the `retail_pulse` docker network we created above. Run the following command to find it:
-
-`docker inspect --format '{{ .NetworkSettings.Networks.retail_pulse.IPAddress }}' mongodb`
+`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" retail_pulse`
 
 # Testing Instructions
 
