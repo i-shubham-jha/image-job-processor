@@ -126,7 +126,7 @@ func sendErrBack(err string, w http.ResponseWriter) {
 
 func validateData(sv *model.StoresVisit) error {
 	if sv.Count < 0 {
-		return fmt.Errorf("count can not be zero")
+		return fmt.Errorf("count can not be less than zero")
 	}
 
 	if len(sv.Visits) == 0 {
