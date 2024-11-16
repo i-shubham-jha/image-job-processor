@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"retail_pulse/internal/db"
 	"retail_pulse/internal/model"
 
@@ -118,4 +119,28 @@ func (svs *StoresVisitService) UpdateStoresVisitStatus(id primitive.ObjectID, st
 	// Perform the update operation
 	_, err := collection.UpdateOne(context.TODO(), bson.M{"_id": id}, update)
 	return err
+}
+
+// UpdateVisitInfo updates the perimeters and imageUUIDs of a specific VisitInfo in a StoresVisit document.
+func (svs *StoresVisitService) UpdateVisitInfo(id primitive.ObjectID, visitIndex int, newPerimeters []int64, newImageUUIDs []string) error {
+	collection := svs.client.Database(db_name).Collection(collection_name)
+
+	// Create the filter to find the specific StoresVisit document by ID
+	filter := bson.M{"_id": id}
+
+	// Create the update to set the new perimeters and imageUUIDs
+	update := bson.M{
+		"$set": bson.M{
+			fmt.Sprintf("visits.%d.perimeters", visitIndex):  newPerimeters,
+			fmt.Sprintf("visits.%d.image_uuids", visitIndex): newImageUUIDs,
+		},
+	}
+
+	// Perform the update operation
+	_, err := collection.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

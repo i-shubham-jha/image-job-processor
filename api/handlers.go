@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"retail_pulse/internal/job"
 	"retail_pulse/internal/model"
 	"retail_pulse/internal/service"
 
@@ -100,6 +101,7 @@ func SubmitJobHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// launch go routine for processing
+	go job.ProcessJob(id, storesVisit)
 
 	// return job id as json
 	res := struct {
