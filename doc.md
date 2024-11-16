@@ -107,6 +107,9 @@ If a `store_id` does not exist or an image download fails for any given URL.
 
 # Installation Instructions
 
+Unzip the given zip file and `cd` into it.
+Make sure you have `docker` and `docker-compose` installed before proceeding.
+
 - This project supports asynchronous logging. The default sink is stdout. You can change the sink to a file named app.log by setting `const LogToFile = true` in the `./internal/logger/logger.go` file at line 25 before running the application.
 
 - The default CSV file containing Store IDs is `StoreMasterAssignment.csv`, located in the root directory. You can change the path by using the `-f` flag when running the application.
