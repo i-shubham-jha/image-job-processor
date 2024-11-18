@@ -204,10 +204,6 @@ To stop the application, press `Ctrl+C` and wait for graceful shutdown.
 
 # Development Environment
 
-### Hardware/Operating System
-- **Hardware:** Ryzen 7 5800H, 16GB DDR4
-- **Operating System:** Manjaro Linux, x86_64, 6.6.54-2-MANJARO Kernel
-
 ### Text Editor/IDE
 - **Text Editor/IDE:** VSCodium v1.95.2, Kate v24.08.1
 
