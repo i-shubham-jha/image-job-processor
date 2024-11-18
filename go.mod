@@ -1,4 +1,4 @@
-module retail_pulse
+module image-job-processor
 
 go 1.23.1
 

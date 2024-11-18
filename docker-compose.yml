@@ -1,4 +1,4 @@
-name: retail_pulse
+name: image-job-processor
 
 services:
   mongodb:
@@ -7,9 +7,9 @@ services:
     ports:
       - "27017:27017"
     networks:
-      - retail_pulse
+      - image-job-processor
 
-  retail_pulse:
+  image-job-processor:
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,8 +21,8 @@ services:
       - ./docker_mounts/files:/app/files
       - ./docker_mounts/logs:/app/logs
     networks:
-      - retail_pulse
+      - image-job-processor
 
 networks:
-  retail_pulse:
+  image-job-processor:
     driver: bridge

@@ -2,9 +2,9 @@ package db
 
 import (
 	"context"
+	"image-job-processor/internal/logger"
 	"log"
 	"os"
-	"retail_pulse/internal/logger"
 	"sync"
 
 	"go.mongodb.org/mongo-driver/mongo"

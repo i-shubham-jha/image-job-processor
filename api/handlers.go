@@ -3,10 +3,10 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"image-job-processor/internal/job"
+	"image-job-processor/internal/model"
+	"image-job-processor/internal/service"
 	"net/http"
-	"retail_pulse/internal/job"
-	"retail_pulse/internal/model"
-	"retail_pulse/internal/service"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

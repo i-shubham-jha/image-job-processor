@@ -2,12 +2,12 @@ package job
 
 import (
 	"fmt"
+	"image-job-processor/internal/files"
+	"image-job-processor/internal/logger"
+	"image-job-processor/internal/model"
+	"image-job-processor/internal/service"
+	"image-job-processor/internal/store"
 	"math/rand/v2"
-	"retail_pulse/internal/files"
-	"retail_pulse/internal/logger"
-	"retail_pulse/internal/model"
-	"retail_pulse/internal/service"
-	"retail_pulse/internal/store"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"

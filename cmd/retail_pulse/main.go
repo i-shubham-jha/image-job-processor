@@ -3,11 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"image-job-processor/api"
+	"image-job-processor/internal/logger"
+	"image-job-processor/internal/service"
+	"image-job-processor/internal/store"
 	"net/http"
-	"retail_pulse/api"
-	"retail_pulse/internal/logger"
-	"retail_pulse/internal/service"
-	"retail_pulse/internal/store"
 
 	"github.com/gorilla/mux"
 )

@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"fmt"
 	"image"
+	"image-job-processor/internal/logger"
 	"image/jpeg"
 	"image/png"
 	"io"
 	"net/http"
 	"os"
 	"path/filepath"
-	"retail_pulse/internal/logger"
 
 	"github.com/google/uuid"
 )

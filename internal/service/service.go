@@ -4,9 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"retail_pulse/internal/db"
-	"retail_pulse/internal/logger"
-	"retail_pulse/internal/model"
+	"image-job-processor/internal/db"
+	"image-job-processor/internal/logger"
+	"image-job-processor/internal/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -14,7 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-const db_name string = "retail_pulse"
+const db_name string = "image-job-processor"
 const collection_name string = "stores_visits"
 
 type StoresVisitService struct {

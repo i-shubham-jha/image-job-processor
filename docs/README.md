@@ -1,6 +1,6 @@
 # Description
 
-- This application allows Retail Pulse to process images collected from stores.
+- This application allows the user to process images collected from stores.
 - Users can submit new jobs to the system, with each job potentially containing multiple images from various stores.
 - Given that the number of images to be processed per job may be quite large, the actual job processing occurs asynchronously in the background.
 - Users receive a job ID when a job is successfully created, which they can use to query the job status at any time.
@@ -128,10 +128,10 @@ Pull the MongoDB Docker Image \
 `docker pull mongodb/mongodb-community-server:latest`
 
 Create a Docker Network
-`docker network create retail_pulse`
+`docker network create image-job-processor`
 
-Run the Image as a Container (attaching to `retail_pulse` network) \
-`docker run --name mongodb -p 27017:27017 -d --network retail_pulse mongodb/mongodb-community-server:latest`
+Run the Image as a Container (attaching to `image-job-processor` network) \
+`docker run --name mongodb -p 27017:27017 -d --network image-job-processor mongodb/mongodb-community-server:latest`
 
 You can check if the MongoDB container is running by executing: \
 `docker ps`
@@ -159,15 +159,15 @@ Replace the `<value>` with the URI in your specific deployment.
 If you followed the MongoDB Docker setup above then use `export MONGODB_URI="mongodb://localhost:27017"              `
 
 ### Building the binary
-Run `go build ./cmd/retail_pulse/main.go` to build the binary, optionally specifying the generated binary's name using the `-o` flag like `go build -o retail_pulse ./cmd/retail_pulse/main.go`
+Run `go build ./cmd/image-job-processor/main.go` to build the binary, optionally specifying the generated binary's name using the `-o` flag like `go build -o image-job-processor ./cmd/image-job-processor/main.go`
 
 The binary will be generated in the current directory.
 
-Run the binary using `./main` or `./retail_pulse` if you used a custom name while building.
+Run the binary using `./main` or `./image-job-processor` if you used a custom name while building.
 
 ### Running without building
 
-If you want to compile the file, run it and then remove the binary after the program ends using a single command then use `go run ./cmd/retail_pulse/main.go`
+If you want to compile the file, run it and then remove the binary after the program ends using a single command then use `go run ./cmd/image-job-processor/main.go`
 
 
 
@@ -177,23 +177,23 @@ A Dockerfile is present in the root directory, which can be used to create the D
 
 Navigate to the root directory of the project.
 
-Use the following command to build the docker image with the tag `retail_pulse`
+Use the following command to build the docker image with the tag `image-job-processor`
 
-`docker build -t retail_pulse .`
+`docker build -t image-job-processor .`
 
 Run the container with the following command, replacing `<YOUR_URI>` with the appropriate URI:
 
-`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI=<YOUR_URI> -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs retail_pulse`
+`docker run -p 8080:8080 --network image-job-processor -e MONGODB_URI=<YOUR_URI> -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs image-job-processor`
 
 If you followed the MongoDB Docker setup above, then use:
 
-`docker run -p 8080:8080 --network retail_pulse -e MONGODB_URI="mongodb://mongodb:27017" -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs  retail_pulse`
+`docker run -p 8080:8080 --network image-job-processor -e MONGODB_URI="mongodb://mongodb:27017" -v $(pwd)/docker_mounts/files:/app/files -v $(pwd)/docker_mounts/logs:/app/logs  image-job-processor`
 
 All the images downloaded by the application will be saved in `./docker_mounts/files/`.
 
 ## Docker Compose
 
-Navigate to the project root. It contains a `docker-compose.yml` file which can be used to setup, build and run both MongoDB and retail_pulse containers using only a single command.
+Navigate to the project root. It contains a `docker-compose.yml` file which can be used to setup, build and run both MongoDB and image-job-processor containers using only a single command.
 
 If logging to `stdout`, then use the following command to run the application and receive the logs on the terminal:
 

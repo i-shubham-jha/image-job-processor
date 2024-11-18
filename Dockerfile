@@ -14,8 +14,8 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o retail_pulse ./cmd/retail_pulse/main.go
-RUN chmod +x retail_pulse
+RUN go build -o image-job-processor ./cmd/image-job-processor/main.go
+RUN chmod +x image-job-processor
 
 # Command to run the executable
-CMD ["./retail_pulse"]
+CMD ["./image-job-processor"]

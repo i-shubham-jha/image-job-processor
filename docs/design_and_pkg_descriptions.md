@@ -4,7 +4,7 @@ This project has been divided into several Go modules to enhance modularity and 
 - Contains handler functions associated with API routes.
 - Also includes basic data validation functions.
 
-# cmd/retail_pulse/main.go
+# cmd/image-job-processor/main.go
 - Reads command line arguments (if any).
 - Initializes reading of the CSV file for store IDs.
 - Initializes the connection to the database.

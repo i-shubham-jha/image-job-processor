@@ -2,8 +2,8 @@ package store
 
 import (
 	"encoding/csv"
+	"image-job-processor/internal/logger"
 	"os"
-	"retail_pulse/internal/logger"
 	"sync"
 )
 
