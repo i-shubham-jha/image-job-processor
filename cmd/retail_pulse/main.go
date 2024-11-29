@@ -32,7 +32,7 @@ func main() {
 
 	// routes and handlers
 	r := mux.NewRouter()
-	r.HandleFunc("/api/status", api.GetJobInfoHandler)
+	r.HandleFunc("/api/status", api.GetJobInfoHandler).Methods("GET")
 	r.HandleFunc("/api/submit", api.SubmitJobHandler).Methods("POST")
 
 	// start server
