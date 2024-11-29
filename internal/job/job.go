@@ -42,11 +42,13 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 		copy(new_image_uuids, store.ImageUUIDs)
 		copy(new_image_perims, store.Perimeters)
 
+		initial_done := len(store.ImageUUIDs)
+
 		for i, img_url := range store.ImageURLs {
 
 			// to resume an ongoing but failed in between job
 			// skips images already processed
-			if i < len(store.ImageUUIDs) {
+			if i < initial_done {
 				continue
 			}
 
@@ -61,7 +63,7 @@ func ProcessJob(id primitive.ObjectID, sv model.StoresVisit) {
 			err = img_holder.SaveImage(id.Hex(), store.StoreID)
 
 			if err != nil {
-				fmt.Println(err)
+				svs.UpdateStoresVisitStatus(id, "failed", err.Error(), store.StoreID)
 				logger.GetLogger().Log(fmt.Sprintf("Failed job for id %v", id.Hex()))
 				return
 			}
